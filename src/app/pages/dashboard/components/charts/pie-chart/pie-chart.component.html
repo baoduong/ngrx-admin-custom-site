@@ -1,0 +1,22 @@
+<div #containerChart>
+  <ng-container *ngIf="showChart">
+    <ngx-charts-pie-chart
+      [scheme]="colorScheme"
+      [results]="CharData"
+      [labels]="false"
+      [legend]="false"
+      [gradient]="gradient"
+      [view]="size"
+      legendTitle=""
+    >
+    </ngx-charts-pie-chart>
+  </ng-container>
+</div>
+<div class="legend">
+  <ng-container *ngFor="let item of CharData; let i = index">
+    <div class="item-label">
+      <span class="square" [style.background]="colorScheme.domain[i]"></span>
+      {{ item.name }}
+    </div>
+  </ng-container>
+</div>

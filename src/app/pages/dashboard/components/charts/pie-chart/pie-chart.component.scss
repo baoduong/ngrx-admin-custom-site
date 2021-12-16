@@ -1,0 +1,17 @@
+$size: 15px;
+
+.square {
+  width: $size;
+  height: $size;
+  display: inline-block;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+.legend {
+  display: block;
+  .item-label {
+    float: left;
+    min-width: calc(100% / 3);
+    padding-bottom: 5px;
+  }
+}

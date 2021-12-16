@@ -1,0 +1,60 @@
+@import "../../@theme/styles/themes.scss";
+
+@include nb-install-component() {
+  wye-pie-chart {
+    display: block;
+    width: 100%;
+    height: nb-theme(card-height-medium);
+
+    ::ng-deep {
+      .pie-label {
+        fill: nb-theme(text-basic-color);
+      }
+
+      text {
+        fill: nb-theme(text-hint-color);
+      }
+
+      .chart-legend {
+        .legend-labels {
+          background: nb-theme(background-basic-color-2);
+        }
+        .legend-label {
+          color: nb-theme(text-hint-color);
+          .active .legend-label-text {
+            color: nb-theme(text-basic-color);
+          }
+        }
+      }
+
+      .total-value,
+      .item-value,
+      .item-percent {
+        line-height: 1.25;
+      }
+
+      .legend-items {
+        overflow-y: hidden;
+      }
+    }
+  }
+}
+nb-card {
+  margin: 0;
+  flex: 1;
+}
+.custom-flex {
+  display: flex;
+  flex-direction: column;
+}
+.marginTop {
+  margin-top: 30px;
+}
+
+.form-control-label {
+  margin: 0;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

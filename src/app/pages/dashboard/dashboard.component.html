@@ -1,0 +1,57 @@
+<div class="row form-group">
+  <div class="col-md-6 custom-flex">
+    <nb-card>
+      <nb-card-header>
+        <h5>Current status of agents</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <wye-status-agents-chart></wye-status-agents-chart>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-6 custom-flex">
+    <nb-card>
+      <nb-card-header>
+        <h5>SLA</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <wye-sla-chart></wye-sla-chart>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row marginTop">
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col">
+            <h5>Call volumes</h5>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <label class="label col-8 form-control-label">
+                Selected date
+              </label>
+              <div class="col-4">
+                <select
+                  (change)="onDateCallChange($event.target.value)"
+                  class="form-select"
+                >
+                  <ng-container *ngFor="let item of optionsDate">
+                    <option [value]="item.value">{{ item.name }}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <wye-call-volumes-chart
+          [RawData]="callVolumeData"
+        ></wye-call-volumes-chart>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

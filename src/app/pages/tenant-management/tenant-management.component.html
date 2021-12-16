@@ -1,0 +1,66 @@
+<nb-card>
+  <nb-card-header>
+    <h5>Tenant Management</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <label
+        style="display: inline-flex; margin-right: 20px"
+        class="search-label"
+        for="search"
+        >Search:
+      </label>
+      <input
+        nbInput
+        (keyup)="updateFilter($event)"
+        id="search"
+        class="search-input"
+      />
+    </div>
+
+    <ngx-datatable
+      #table
+      class="material"
+      [rows]="rows"
+      [loadingIndicator]="loadingIndicator"
+      [columnMode]="ColumnMode"
+      [headerHeight]="40"
+      [footerHeight]="40"
+      [limit]="10"
+      rowHeight="auto"
+      headerClass="hd"
+    >
+      <ngx-datatable-column prop="name" [flexGrow]="2">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{ value }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column prop="modules" [flexGrow]="4">
+        <ng-template
+          let-row="row"
+          let-value="value"
+          ngx-datatable-cell-template
+        >
+          {{ value.join(" | ") }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column
+        name="Action"
+        [flexGrow]="1"
+        [headerTemplate]="tplActionRow"
+      >
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <nb-actions size="small">
+            <nb-action
+              class="control-item"
+              icon="settings-2-outline"
+            ></nb-action>
+            <nb-action class="control-item" icon="trash-2-outline"></nb-action
+          ></nb-actions>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #tplActionRow></ng-template>

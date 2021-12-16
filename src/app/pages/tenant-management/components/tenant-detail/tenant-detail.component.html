@@ -1,0 +1,265 @@
+<nb-card>
+  <nb-card-header>
+    <h5>New tenant</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-stepper [disableStepNavigation]="true" #stepper>
+      <nb-step [stepControl]="profileForm" label="Profile">
+        <div class="re-layout-form">
+          <form [formGroup]="profileForm" class="step-container">
+            <div class="form-group row">
+              <label class="label col-2 form-control-label"
+                >Tenant name (*)</label
+              >
+              <div class="col-5">
+                <input
+                  nbInput
+                  type="text"
+                  placeholder="Enter tenant name"
+                  class="form-control"
+                  formControlName="tenantNameCtrl"
+                  [ngClass]="{
+                    'form-control-danger':
+                      profileForm.controls.tenantNameCtrl.invalid &&
+                      profileForm.controls.tenantNameCtrl.touched
+                  }"
+                />
+                <ng-container
+                  *ngIf="
+                    profileForm.controls.tenantNameCtrl.invalid &&
+                    profileForm.controls.tenantNameCtrl.touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.controls.tenantNameCtrl.errors?.required"
+                  >
+                    This field is required
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="label col-2 form-control-label"
+                >Admin email (*)</label
+              >
+              <div class="col-5">
+                <input
+                  nbInput
+                  type="email"
+                  placeholder="Enter admin email"
+                  class="form-control"
+                  formControlName="adminEmailCtrl"
+                  [ngClass]="{
+                    'form-control-danger':
+                      profileForm.controls.adminEmailCtrl.invalid &&
+                      profileForm.controls.adminEmailCtrl.touched
+                  }"
+                />
+                <ng-container
+                  *ngIf="
+                    profileForm.controls.adminEmailCtrl.invalid &&
+                    profileForm.controls.adminEmailCtrl.touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.controls.adminEmailCtrl.errors?.required"
+                  >
+                    This field is required
+                  </p>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.controls.adminEmailCtrl.errors?.email"
+                  >
+                    Email is incorrect format
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="label col-2 form-control-label"
+                >Admin password (*)</label
+              >
+              <div class="col-5">
+                <input
+                  nbInput
+                  type="password"
+                  placeholder="Enter password"
+                  class="form-control"
+                  formControlName="adminPassCtrl"
+                  [ngClass]="{
+                    'form-control-danger':
+                      profileForm.controls.adminPassCtrl.invalid &&
+                      profileForm.controls.adminPassCtrl.touched
+                  }"
+                />
+                <ng-container
+                  *ngIf="
+                    profileForm.controls.adminPassCtrl.invalid &&
+                    profileForm.controls.adminPassCtrl.touched
+                  "
+                >
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.controls.adminEmailCtrl.errors?.required"
+                  >
+                    This field is required
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="label col-2 form-control-label"
+                >Confirm password (*)</label
+              >
+              <div class="col-5">
+                <input
+                  nbInput
+                  type="password"
+                  placeholder="Re-enter password"
+                  class="form-control"
+                  formControlName="adminPassConfirmCtrl"
+                  [ngClass]="{
+                    'form-control-danger': profileForm.hasError('notSame')
+                  }"
+                />
+                <ng-container>
+                  <p
+                    class="caption status-danger"
+                    *ngIf="profileForm.hasError('notSame')"
+                  >
+                    Passwords are not same
+                  </p>
+                </ng-container>
+              </div>
+            </div>
+            <button
+              status="primary"
+              (click)="onProfileFormSubmit()"
+              nbButton
+              nbStepperNext
+            >
+              next
+            </button>
+          </form>
+        </div>
+      </nb-step>
+      <nb-step [stepControl]="modulesForm" label="Modules">
+        <form
+          [formGroup]="modulesForm"
+          (ngSubmit)="onModulesFormSubmit()"
+          class="step-container"
+        >
+          <div class="form-group row show-grid">
+            <ng-container *ngIf="modulesForm.controls.modules['controls']">
+              <div
+                class="col-md-4"
+                formArrayName="modules"
+                *ngFor="
+                  let item of modulesForm.controls.modules['controls'];
+                  let i = index
+                "
+              >
+                <div class="row form-group">
+                  <div class="col-8">
+                    <nb-checkbox [formControlName]="i">
+                      {{ modules[i].name }}
+                    </nb-checkbox>
+                  </div>
+                  <div class="col-4 flex-end">
+                    <a class="control-item" (click)="openConfigurationForm(modules[i])" href="javascript:;">
+                      <nb-icon icon="settings-2-outline"></nb-icon>
+                    </a>
+                  </div>
+                </div>
+                <p class="text-hint">
+                  {{ modules[i].description }}
+                </p>
+              </div>
+            </ng-container>
+          </div>
+          <button status="info" nbButton ghost nbStepperPrevious>prev</button>
+          <button
+            status="primary"
+            (click)="onModulesFormSubmit()"
+            nbButton
+            nbStepperNext
+          >
+            Next
+          </button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="previewForm" label="Preview">
+        <form class="step-container form-horizontal">
+          <div class="form-group row">
+            <label class="label col-2 form-control-label"> Tenant name </label>
+            <div class="col-5">
+              <input
+                disabled
+                readonly
+                nbInput
+                fullWidth
+                name="name"
+                [(ngModel)]="tenantData.name"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="label col-2 form-control-label"> Admin email </label>
+            <div class="col-5">
+              <input
+                disabled
+                readonly
+                nbInput
+                fullWidth
+                name="email"
+                [(ngModel)]="tenantData.email"
+              />
+            </div>
+          </div>
+          <div class="row" style="align-items: flex-start">
+            <label class="label col-2 form-control-label">
+              Selected modules
+            </label>
+            <div class="col-10">
+              <div class="row">
+                <ng-container *ngFor="let item of tenantData.modules">
+                  <div class="col-3 form-group">
+                    <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                    {{ item.name }}
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row" style="align-items: flex-start">
+            <label class="label col-2 form-control-label"> Access token </label>
+            <div class="col-5">
+              <textarea nbInput fullWidth placeholder="" rows="5"></textarea>
+              <p class="text-hint">
+                Please copy and use this access token in requests of the data
+                provider.
+              </p>
+            </div>
+          </div>
+
+          <button status="info" nbButton ghost nbStepperPrevious>prev</button>
+          <button nbButton status="primary" nbStepperNext>Confirm</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="previewForm" [hidden]="true" label="">
+        <div class="step-container">
+          <h3 class="text-center" style="margin: 50px">Tenant created!</h3>
+          <div class="row" style="margin-bottom: 50px; padding-top: 50px">
+            <div class="col-12" style="justify-content: center; display: flex">
+              <button status="primary" nbButton (click)="stepper.reset()">
+                Create new tenant
+              </button>
+            </div>
+          </div>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
